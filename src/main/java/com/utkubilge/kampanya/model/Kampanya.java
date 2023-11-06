@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Table(name="Kampanyalar")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @ToString
+@Entity
+@Table(name="Kampanyalar")
 public class Kampanya {
 	
 	@Id

@@ -7,5 +7,7 @@ import com.utkubilge.kampanya.model.Kampanya;
 
 @Repository
 public interface KampanyaRepo extends JpaRepository<Kampanya,Long>{
+    
+
 
 }
