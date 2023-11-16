@@ -24,47 +24,49 @@ public class KampanyaController {
 	@Autowired
 	private KampanyaRepo kampanyaRepo;
 
-	//API endpoints ---
+	// API endpoints ---
 
-	//Kampanya Aktivasyon
+	// Kampanya Aktivasyon
 	@PutMapping("/api/kampanyaOnay/{id}")
-		public ResponseEntity<Kampanya> kampanyaOnay(@PathVariable Long id) {
+	public ResponseEntity<Kampanya> kampanyaOnay(@PathVariable Long id) {
 		Optional<Kampanya> oldKampanya = kampanyaRepo.findById(id);
-		
+
 		if (oldKampanya.isPresent()) {
 			Kampanya updatedKampanya = oldKampanya.get();
 			updatedKampanya.setStatus("Aktif");
 			Kampanya response = kampanyaRepo.save(updatedKampanya);
-			
-			
+
 			return ResponseEntity.ok(response);
 		}
 		return ResponseEntity.notFound().build();
 	}
 
 	@GetMapping("/api/statistics")
-    public ResponseEntity<Long> getActiveItemCount() {
-        Long activeCount = kampanyaRepo.count();
-        return ResponseEntity.ok(activeCount);
+    public ResponseEntity<String> getStatistics() {
+        Long activeCount = kampanyaRepo.countByStatus("Aktif");
+		Long deactiveCount = kampanyaRepo.countByStatus("Deaktif");
+		Long pendingCount = kampanyaRepo.countByStatus("Onay Bekliyor");
+		
+        return ResponseEntity.ok("Aktif:" + activeCount + ",Deaktif:"  + deactiveCount + "Onay Bekliyor:" + pendingCount);
     }
 
-	//Optionals ---
+	// Optionals ---
 	@GetMapping("/api/getAllKampanyalar")
 	public ResponseEntity<List<Kampanya>> getAllKampanyalar() {
 		try {
 			List<Kampanya> kampanyaList = new ArrayList<>();
 			kampanyaRepo.findAll().forEach(kampanyaList::add);
-			
+
 			if (kampanyaList.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		
+
 			}
-			return new ResponseEntity<>(kampanyaList ,HttpStatus.OK);
+			return new ResponseEntity<>(kampanyaList, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@GetMapping("/api/getKampanyaById/{id}")
 	public ResponseEntity<Kampanya> getKampanyaById(@PathVariable Long id) {
 		Optional<Kampanya> kampanyaData = kampanyaRepo.findById(id);
@@ -74,31 +76,29 @@ public class KampanyaController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	
-
 	@PostMapping("/api/addKampanya")
 	public ResponseEntity<Kampanya> addKampanya(@RequestBody Kampanya kampanya) {
 		Kampanya kampanyaObj = kampanyaRepo.save(kampanya);
 		return new ResponseEntity<>(kampanyaObj, HttpStatus.OK);
-		
+
 	}
-	
-	//update the state only
+
+	// update the state only
 	@PostMapping("/api/updateKampanyaById/{id}")
 	public ResponseEntity<Kampanya> updateKampanyaById(@PathVariable Long id, @RequestBody Kampanya newKampanyaData) {
 		Optional<Kampanya> oldKampanyaData = kampanyaRepo.findById(id);
-		
+
 		if (oldKampanyaData.isPresent()) {
 			Kampanya updatedKampanyaData = oldKampanyaData.get();
-			//updatedKampanyaData.setStatus(newKampanyaData.getStatus());
-			
+			// updatedKampanyaData.setStatus(newKampanyaData.getStatus());
+
 			Kampanya kampanyaObj = kampanyaRepo.save(updatedKampanyaData);
 			return new ResponseEntity<>(kampanyaObj, HttpStatus.OK);
-			 
+
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-	
+
 	@DeleteMapping("/api/deleteKampanyaById/{id}")
 	public ResponseEntity<HttpStatus> deleteBookById(@PathVariable Long id) {
 		kampanyaRepo.deleteById(id);
