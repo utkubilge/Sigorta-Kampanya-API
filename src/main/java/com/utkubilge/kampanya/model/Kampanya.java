@@ -1,5 +1,7 @@
 package com.utkubilge.kampanya.model;
 
+import java.time.Instant;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,4 +30,7 @@ public class Kampanya {
 	private String desc;
 	private String type;
 	private String status;
+
+	private Instant createdDate;
+	private Instant modifiedDate;
 }

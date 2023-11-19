@@ -1,5 +1,7 @@
 package com.utkubilge.kampanya;
 
+import java.time.Instant;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,8 +21,8 @@ public class KampanyaApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(KampanyaRepo repo) {
 		return args -> {
-			repo.save(new Kampanya(null,"kampanya 1","kampanya içeriği","OSS","Onay Bekliyor"));
-			repo.save(new Kampanya(null,"kampanya 2","kampanya içeriği","OSS","Onay Bekliyor"));
+			repo.save(new Kampanya(null, "kampanya 1", "kampanya içeriği", "OSS", "Onay Bekliyor",Instant.now(),Instant.now()));
+			repo.save(new Kampanya(null, "kampanya 2", "kampanya içeriği", "OSS", "Onay Bekliyor",Instant.now(),Instant.now()));
 		};
 	}
 
