@@ -11,6 +11,6 @@ import com.utkubilge.kampanya.model.Kampanya;
 public interface KampanyaRepo extends JpaRepository<Kampanya,Long>{
     
     //@Query("SELECT COUNT(*) FROM Kampanyalar WHERE status = ?1")
-    Long countByStatus(String status);
+    Long countByStatus(int status);
 
 }
