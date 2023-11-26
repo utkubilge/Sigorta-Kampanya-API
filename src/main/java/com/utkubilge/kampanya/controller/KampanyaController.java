@@ -28,15 +28,7 @@ public class KampanyaController {
 	@Autowired
 	private KampanyaRepo kampanyaRepo;
 
-	private final Logger logger = LoggerFactory.getLogger(KampanyaController.class);
-
-	@GetMapping("/")
-	public ModelAndView index() {
-		logger.debug("request to GET index");
-		ModelAndView modelAndView = new ModelAndView("index");
-		modelAndView.addObject("kampanyalarItems", kampanyaRepo.findAll());
-		return modelAndView;
-	}
+	
 
 	// API endpoints ---
 	// Kampanya Aktivasyon
@@ -54,17 +46,28 @@ public class KampanyaController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/api/statistics")
-	public ResponseEntity<String> getStatistics() {
-		Long deactiveCount = kampanyaRepo.countByStatus(2);
-		Long pendingCount = kampanyaRepo.countByStatus(3);
-		Long activeCount = kampanyaRepo.countByStatus(1);
-
-		return ResponseEntity
-				.ok("Aktif:" + activeCount + ", Deaktif:" + deactiveCount + ", Onay Bekliyor:" + pendingCount);
+	//Kampanya Ekleme
+	@PostMapping("/api/addKampanya")
+	public ResponseEntity<Kampanya> addKampanya(@RequestBody Kampanya kampanya) {
+		Kampanya kampanyaObj = kampanyaRepo.save(kampanya);
+		return new ResponseEntity<>(kampanyaObj, HttpStatus.OK);
 	}
 
-	// Optionals ---
+	// Kampanya Deaktivasyonu
+	@PutMapping("/api/kampanyaDeaktif/{id}")
+	public ResponseEntity<Kampanya> kampanyaDeaktif(@PathVariable Long id) {
+		Optional<Kampanya> oldKampanya = kampanyaRepo.findById(id);
+
+		if (oldKampanya.isPresent()) {
+			Kampanya updatedKampanya = oldKampanya.get();
+			updatedKampanya.setStatus(2);
+			Kampanya response = kampanyaRepo.save(updatedKampanya);
+
+			return ResponseEntity.ok(response);
+		}
+		return ResponseEntity.notFound().build();
+	}
+
 	@GetMapping("/api/getAllKampanyalar")
 	public ResponseEntity<List<Kampanya>> getAllKampanyalar() {
 		try {
@@ -81,6 +84,20 @@ public class KampanyaController {
 		}
 	}
 
+	@GetMapping("/api/statistics")
+	public ResponseEntity<String> getStatistics() {
+		Long deactiveCount = kampanyaRepo.countByStatus(2);
+		Long pendingCount = kampanyaRepo.countByStatus(3);
+		Long activeCount = kampanyaRepo.countByStatus(1);
+
+		return ResponseEntity
+				.ok("Aktif:" + activeCount + ", Deaktif:" + deactiveCount + ", Onay Bekliyor:" + pendingCount);
+	}
+
+
+	// Optionals ---
+	
+
 	@GetMapping("/api/getKampanyaById/{id}")
 	public ResponseEntity<Kampanya> getKampanyaById(@PathVariable Long id) {
 		Optional<Kampanya> kampanyaData = kampanyaRepo.findById(id);
@@ -90,12 +107,7 @@ public class KampanyaController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	@PostMapping("/api/addKampanya")
-	public ResponseEntity<Kampanya> addKampanya(@RequestBody Kampanya kampanya) {
-		Kampanya kampanyaObj = kampanyaRepo.save(kampanya);
-		return new ResponseEntity<>(kampanyaObj, HttpStatus.OK);
-
-	}
+	
 
 	// update the state only
 	@PostMapping("/api/updateKampanyaById/{id}")
@@ -113,7 +125,7 @@ public class KampanyaController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	@GetMapping("/api/deleteKampanyaById/{id}")
+	@DeleteMapping("/api/deleteKampanyaById/{id}")
 	public ResponseEntity<HttpStatus> deleteKampanyaById(@PathVariable Long id) {
 		kampanyaRepo.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);

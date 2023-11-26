@@ -40,7 +40,6 @@ public class Kampanya {
 	//status: Default:0, Aktif:1, Deaktif:2, Onay Bekliyor:3, Mükerrer:4
 	private int status;
 	
-
 	private Instant createdDate;
 	private Instant modifiedDate;
 }
