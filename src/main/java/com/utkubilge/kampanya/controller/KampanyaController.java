@@ -28,9 +28,20 @@ public class KampanyaController {
 	@Autowired
 	private KampanyaRepo kampanyaRepo;
 
-	
-
 	// API endpoints ---
+
+	// Kampanya Ekleme
+	@PostMapping("/api/addKampanya")
+	public ResponseEntity<Kampanya> addKampanya(@RequestBody Kampanya kampanya) {
+		//Kampanya existingKampanya = kampanyaRepo.findByNameAndDescAndType(kampanya.getName(), kampanya.getDesc(),kampanya.getType());
+		Kampanya newKampanya = new Kampanya(kampanya.getName(), kampanya.getDesc(), kampanya.getType());
+		// if (existingKampanya != null) {
+		// 	newKampanya.setStatus(4);
+		// }
+		Kampanya kampanyaObj = kampanyaRepo.save(newKampanya);
+		return new ResponseEntity<>(kampanyaObj, HttpStatus.OK);
+	}
+
 	// Kampanya Aktivasyon
 	@PutMapping("/api/kampanyaOnay/{id}")
 	public ResponseEntity<Kampanya> kampanyaOnay(@PathVariable Long id) {
@@ -40,17 +51,11 @@ public class KampanyaController {
 			Kampanya updatedKampanya = oldKampanya.get();
 			updatedKampanya.setStatus(1);
 			Kampanya response = kampanyaRepo.save(updatedKampanya);
+			
 
 			return ResponseEntity.ok(response);
 		}
 		return ResponseEntity.notFound().build();
-	}
-
-	//Kampanya Ekleme
-	@PostMapping("/api/addKampanya")
-	public ResponseEntity<Kampanya> addKampanya(@RequestBody Kampanya kampanya) {
-		Kampanya kampanyaObj = kampanyaRepo.save(kampanya);
-		return new ResponseEntity<>(kampanyaObj, HttpStatus.OK);
 	}
 
 	// Kampanya Deaktivasyonu
@@ -94,9 +99,7 @@ public class KampanyaController {
 				.ok("Aktif:" + activeCount + ", Deaktif:" + deactiveCount + ", Onay Bekliyor:" + pendingCount);
 	}
 
-
 	// Optionals ---
-	
 
 	@GetMapping("/api/getKampanyaById/{id}")
 	public ResponseEntity<Kampanya> getKampanyaById(@PathVariable Long id) {
@@ -106,8 +109,6 @@ public class KampanyaController {
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-
-	
 
 	// update the state only
 	@PostMapping("/api/updateKampanyaById/{id}")
@@ -132,12 +133,12 @@ public class KampanyaController {
 	}
 
 	@GetMapping("/api/delete/{id}")
-    public ResponseEntity<HttpStatus> deleteTodoItem(@PathVariable("id") long id, Model model) {
-        Kampanya kampanyaItem = kampanyaRepo
-        .findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("TodoItem id: " + id + " not found"));
-    
-        kampanyaRepo.delete(kampanyaItem);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	public ResponseEntity<HttpStatus> deleteTodoItem(@PathVariable("id") long id, Model model) {
+		Kampanya kampanyaItem = kampanyaRepo
+				.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("TodoItem id: " + id + " not found"));
+
+		kampanyaRepo.delete(kampanyaItem);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

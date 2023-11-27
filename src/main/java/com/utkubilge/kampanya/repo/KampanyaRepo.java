@@ -13,4 +13,7 @@ public interface KampanyaRepo extends JpaRepository<Kampanya,Long>{
     //@Query("SELECT COUNT(*) FROM Kampanyalar WHERE status = ?1")
     Long countByStatus(int status);
 
+    Kampanya findByNameAndDescAndType(String name, String desc, int type);
+
+
 }
