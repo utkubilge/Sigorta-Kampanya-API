@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "001f0aca-fa4e-4037-9b4e-0c7b16d2536d",
+		"name": "Kampanya API Testleri",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14017537"
+	},
+	"item": [
+		{
+			"name": "/api/getAllKampanyalar",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/api/getAllKampanyalar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllKampanyalar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/statistics",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/api/statistics",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"statistics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/addKampanya",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Kampanya 30\",\r\n    \"desc\": \"Kampanya İçeriği Detay 30\",\r\n    \"type\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/addKampanya",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addKampanya"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/kampanyaOnay/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/kampanyaOnay/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"kampanyaOnay",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/kampanyaDeaktif/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/kampanyaOnay/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"kampanyaOnay",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/deleteKampanyaById/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/deleteKampanyaById/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"deleteKampanyaById",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
