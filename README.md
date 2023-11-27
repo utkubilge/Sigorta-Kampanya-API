@@ -6,11 +6,15 @@ GET /api/getAllKampanyalar
 
 GET /api/getKampanyaById/{id}
 
-GET /api/statistics
+POST /api/addKampanya
 
 PUT /api/kampanyaOnay/{id}
 
-POST /api/addKampanya
+PUT /api/kampanyaDeaktif/{id}
 
-## render.com realtime POC production:
+GET /api/statistics
+
+DELETE /api/deleteKampanyaById/{id}
+
+## render.com realtime POC production deployed by docker:
 https://kampanyaapi.onrender.com/
