@@ -18,3 +18,14 @@ DELETE /api/deleteKampanyaById/{id}
 
 ## render.com realtime POC production deployed by docker:
 https://kampanyaapi.onrender.com/
+
+## Proje Teknolojileri:
+* Spring BOOT 3.1.5
+* Java 17
+* Maven 4.0
+* Data JPA
+* Lombok
+* H2 Database
+* Bootstrap 4/JQuery
+* Docker
+* ThymeLeaf
